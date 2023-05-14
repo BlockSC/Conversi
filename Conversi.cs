@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 public enum DiscColor
 {
@@ -9,7 +9,7 @@ public enum DiscColor
 
 public class OthelloGame
 {
-    private const int BoardSize = 10; // Change the board size to 10
+    private const int BoardSize = 8;
     private DiscColor[,] board;
     public DiscColor CurrentPlayer { get; private set; }
 
@@ -26,11 +26,10 @@ public class OthelloGame
         }
 
         // Place the initial discs
-        int center = BoardSize / 2;
-        board[center - 1, center - 1] = DiscColor.White;
-        board[center - 1, center] = DiscColor.Black;
-        board[center, center - 1] = DiscColor.Black;
-        board[center, center] = DiscColor.White;
+        board[3, 3] = DiscColor.White;
+        board[3, 4] = DiscColor.Black;
+        board[4, 3] = DiscColor.Black;
+        board[4, 4] = DiscColor.White;
 
         // Set the starting player
         CurrentPlayer = DiscColor.Black;
@@ -38,8 +37,8 @@ public class OthelloGame
 
     public void PrintBoard()
     {
-        Console.WriteLine("    A B C D E F G H I J"); // Adjust the column headers
-        Console.WriteLine("   ---------------------");
+        Console.WriteLine("    A B C D E F G H");
+        Console.WriteLine("   -----------------");
         for (int row = 0; row < BoardSize; row++)
         {
             Console.Write(row + 1 + " |");
@@ -65,7 +64,7 @@ public class OthelloGame
             }
             Console.WriteLine(" |");
         }
-        Console.WriteLine("   ---------------------");
+        Console.WriteLine("   -----------------");
     }
 
     public bool IsMoveValid(int row, int col, DiscColor color)
@@ -108,6 +107,7 @@ public class OthelloGame
         // Validate the move and update the board accordingly
         if (IsMoveValid(row, col, color))
         {
+            //
             // Place the disc
             board[row, col] = color;
 
@@ -173,17 +173,10 @@ class Program
         {
             Console.WriteLine("Current Player: " + game.CurrentPlayer.ToString());
 
-            Console.Write("Enter row (1-10): ");
-            int row = 0;
-            try
-            {
-                row = int.Parse(Console.ReadLine()) - 1;
-            }
-            catch
-            {
-                Console.WriteLine("Write a number!");
-            }
-            Console.Write("Enter column (A-J): ");
+            Console.Write("Enter row (1-8): ");
+            int row = int.Parse(Console.ReadLine()) - 1;
+
+            Console.Write("Enter column (A-H): ");
             string column = Console.ReadLine().ToUpper();
             int col = column[0] - 'A';
 
